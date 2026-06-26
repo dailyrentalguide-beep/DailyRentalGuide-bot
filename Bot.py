@@ -44,7 +44,6 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"""
 أنت خبير في:
 - Airbnb
-- Booking
 - التأجير اليومي
 - إدارة الشقق
 - التسويق
