@@ -42,8 +42,9 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 text = response.text
 
-for i in range(0, len(text), 4000):
-    await update.message.reply_text(text[i:i+4000])
+response = model.generate_content(
+    f"أجب باختصار وبحد أقصى 500 كلمة:\n\n{user_message}"
+)
 
     except Exception as e:
         print(e)
