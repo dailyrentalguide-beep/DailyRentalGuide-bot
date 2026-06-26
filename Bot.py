@@ -40,7 +40,10 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         response = model.generate_content(user_message)
 
-        await update.message.reply_text(response.text)
+text = response.text
+
+for i in range(0, len(text), 4000):
+    await update.message.reply_text(text[i:i+4000])
 
     except Exception as e:
         print(e)
