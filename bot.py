@@ -11,7 +11,6 @@ from telegram.ext import (
 
 from rgbrain import RGBrain
 
-
 # ============================
 # API KEYS
 # ============================
@@ -19,7 +18,6 @@ from rgbrain import RGBrain
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 
 brain = RGBrain()
-
 
 # ============================
 # START COMMAND
@@ -32,7 +30,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "أنا مساعدك في التأجير اليومي للشقق الخاصة.\n"
         "اسألني أي سؤال وسأجيبك من دليل RG AI."
     )
-
 
 # ============================
 # CHAT
@@ -67,7 +64,6 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
             f"حدث خطأ:\n{e}"
         )
-
 
 # ============================
 # RUN BOT
