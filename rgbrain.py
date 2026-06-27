@@ -7,7 +7,7 @@ The Heart of RG AI
 
 from config import MIN_CONFIDENCE
 from knowledge_manager import KnowledgeManager
-from Ai import RGAI
+from ai import RGAI
 
 
 class RGBrain:
