@@ -1,37 +1,25 @@
 """
 =========================================
-RG Brain v2
+RG Brain v3
+The Heart of RG AI
 =========================================
 """
 
 from config import MIN_CONFIDENCE
+from knowledge_manager import KnowledgeManager
 
 
 class RGBrain:
 
     def __init__(self):
-        self.version = "2.0"
 
-        # سيتم استبدالها لاحقاً بقاعدة المعرفة
-        self.knowledge = [
-            {
-                "question": "كيف أزيد الحجوزات؟",
-                "answer": "حسّن الصور، واكتب وصفاً احترافياً، وفعّل التسعير المناسب، واهتم بسرعة الرد على الضيوف."
-            },
-            {
-                "question": "كيف أرفع التقييم؟",
-                "answer": "النظافة وسرعة التواصل وتجربة الضيف هي أهم أسباب ارتفاع التقييم."
-            }
-        ]
+        self.version = "3.0"
+
+        self.knowledge = KnowledgeManager()
 
     def search(self, question):
 
-        for item in self.knowledge:
-
-            if item["question"] == question:
-                return item
-
-        return None
+        return self.knowledge.search(question)
 
     def answer(self, question):
 
@@ -42,7 +30,9 @@ class RGBrain:
             return {
                 "status": "FOUND",
                 "answer": result["answer"],
-                "confidence": 0.95
+                "confidence": 0.95,
+                "source": result.get("source", "Unknown"),
+                "category": result.get("category", "General")
             }
 
         return {
