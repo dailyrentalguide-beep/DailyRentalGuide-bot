@@ -1,5 +1,4 @@
 import os
-import google.generativeai as genai
 
 from telegram import Update
 from telegram.ext import (
@@ -10,64 +9,65 @@ from telegram.ext import (
     filters,
 )
 
+from rgbrain import RGBrain
+
+
 # ============================
 # API KEYS
 # ============================
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-genai.configure(api_key=GEMINI_API_KEY)
+brain = RGBrain()
 
-model = genai.GenerativeModel("gemini-2.5-flash")
 
 # ============================
 # START COMMAND
 # ============================
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     await update.message.reply_text(
         "👋 أهلاً بك في RG AI\n\n"
         "أنا مساعدك في التأجير اليومي للشقق الخاصة.\n"
-        "اسألني أي سؤال وسأجيبك مباشرة."
+        "اسألني أي سؤال وسأجيبك من دليل RG AI."
     )
+
 
 # ============================
 # CHAT
 # ============================
 
 async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     user_message = update.message.text
 
     try:
-        response = model.generate_content(
-            f"""
-أنت خبير في:
-- Airbnb
-- التأجير اليومي
-- إدارة الشقق
-- التسويق
-- التسعير
-- زيادة الأرباح
 
-أجب باللغة العربية.
-اجعل الإجابة واضحة ومختصرة.
+        result = brain.answer(user_message)
 
-سؤال المستخدم:
-{user_message}
-"""
-        )
+        if result["status"] == "FOUND":
 
-        text = response.text
+            text = result["answer"]
+
+        else:
+
+            text = (
+                "❌ لم أجد إجابة لهذا السؤال داخل دليل RG AI.\n\n"
+                "إذا كنت تحتاج استشارة خاصة، تواصل مع فهد مباشرة."
+            )
 
         for i in range(0, len(text), 4000):
-            await update.message.reply_text(text[i:i+4000])
+            await update.message.reply_text(text[i:i + 4000])
 
     except Exception as e:
+
         print(e)
+
         await update.message.reply_text(
             f"حدث خطأ:\n{e}"
         )
+
 
 # ============================
 # RUN BOT
@@ -76,10 +76,11 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
+
 app.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, chat)
 )
 
-print("Bot Started...")
+print("RG AI Started...")
 
 app.run_polling()
