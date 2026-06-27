@@ -1,18 +1,8 @@
 """
 =========================================
-RG Brain
-Version 2.0
+RG Brain v2
+The Heart of RG AI
 =========================================
-
-The heart of RG AI.
-
-Responsibilities:
-
-1. Search Knowledge
-2. Calculate Confidence
-3. Decide
-4. Rewrite Answer
-5. Learn
 """
 
 from config import MIN_CONFIDENCE
@@ -25,38 +15,53 @@ class RGBrain:
 
     def search(self, question):
         """
-        Search the knowledge base.
+        Search the Knowledge Base.
 
         Returns:
-            result
+            Capsules
         """
-        pass
+        print(f"Searching for: {question}")
 
-    def confidence(self, result):
+        return []
+
+    def calculate_confidence(self, capsules):
         """
         Calculate confidence score.
-
-        Returns:
-            float
         """
-        pass
+
+        if len(capsules) == 0:
+            return 0.0
+
+        return 0.95
 
     def answer(self, question):
         """
-        Main function.
+        Main Brain Logic
+        """
 
-        Question
-            ↓
-        Search
-            ↓
-        Confidence
-            ↓
-        Answer / Consultation
-        """
-        pass
+        capsules = self.search(question)
 
-    def learn(self):
+        confidence = self.calculate_confidence(capsules)
+
+        if confidence >= MIN_CONFIDENCE:
+
+            return {
+                "status": "FOUND",
+                "confidence": confidence,
+                "capsules": capsules
+            }
+
+        return {
+            "status": "NOT_FOUND",
+            "confidence": confidence,
+            "capsules": []
+        }
+
+    def learn(self, question, answer):
         """
-        Learn from approved consultation.
+        Learn new approved knowledge.
         """
-        pass
+
+        print("Learning new knowledge...")
+
+        return True
