@@ -7,6 +7,7 @@ The Heart of RG AI
 
 from config import MIN_CONFIDENCE
 from knowledge_manager import KnowledgeManager
+from Ai import RGAI
 
 
 class RGBrain:
@@ -16,6 +17,8 @@ class RGBrain:
         self.version = "3.0"
 
         self.knowledge = KnowledgeManager()
+
+        self.ai = RGAI()
 
     def search(self, question):
 
@@ -27,11 +30,16 @@ class RGBrain:
 
         if result:
 
+            rewritten_answer = self.ai.rewrite(
+                question,
+                result["answer"]
+            )
+
             return {
                 "status": "FOUND",
-                "answer": result["answer"],
+                "answer": rewritten_answer,
                 "confidence": 0.95,
-                "source": result.get("source", "Unknown"),
+                "source": result.get("source", "Book"),
                 "category": result.get("category", "General")
             }
 
