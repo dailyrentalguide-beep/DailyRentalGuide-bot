@@ -1,7 +1,6 @@
 """
 =========================================
 RG Brain v2
-The Heart of RG AI
 =========================================
 """
 
@@ -13,55 +12,41 @@ class RGBrain:
     def __init__(self):
         self.version = "2.0"
 
+        # سيتم استبدالها لاحقاً بقاعدة المعرفة
+        self.knowledge = [
+            {
+                "question": "كيف أزيد الحجوزات؟",
+                "answer": "حسّن الصور، واكتب وصفاً احترافياً، وفعّل التسعير المناسب، واهتم بسرعة الرد على الضيوف."
+            },
+            {
+                "question": "كيف أرفع التقييم؟",
+                "answer": "النظافة وسرعة التواصل وتجربة الضيف هي أهم أسباب ارتفاع التقييم."
+            }
+        ]
+
     def search(self, question):
-        """
-        Search the Knowledge Base.
 
-        Returns:
-            Capsules
-        """
-        print(f"Searching for: {question}")
+        for item in self.knowledge:
 
-        return []
+            if item["question"] == question:
+                return item
 
-    def calculate_confidence(self, capsules):
-        """
-        Calculate confidence score.
-        """
-
-        if len(capsules) == 0:
-            return 0.0
-
-        return 0.95
+        return None
 
     def answer(self, question):
-        """
-        Main Brain Logic
-        """
 
-        capsules = self.search(question)
+        result = self.search(question)
 
-        confidence = self.calculate_confidence(capsules)
-
-        if confidence >= MIN_CONFIDENCE:
+        if result:
 
             return {
                 "status": "FOUND",
-                "confidence": confidence,
-                "capsules": capsules
+                "answer": result["answer"],
+                "confidence": 0.95
             }
 
         return {
             "status": "NOT_FOUND",
-            "confidence": confidence,
-            "capsules": []
+            "answer": None,
+            "confidence": 0.0
         }
-
-    def learn(self, question, answer):
-        """
-        Learn new approved knowledge.
-        """
-
-        print("Learning new knowledge...")
-
-        return True
