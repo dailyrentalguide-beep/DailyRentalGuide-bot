@@ -1,0 +1,14 @@
+[
+  {
+    "code": "RG-7K9P-41XQ-M2LA",
+    "customer_name": "Test User",
+    "product": "Daily Rental Guide",
+    "subscription_type": "FREE",
+    "consultation_days": 7,
+    "used": false,
+    "telegram_id": null,
+    "consultation_started": false,
+    "consultation_start": null,
+    "consultation_end": null
+  }
+]
